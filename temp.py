@@ -33,13 +33,13 @@ def getTemps():
     temps=[]
     # Get mappings of UUID to Human Friendly name
     mappings = getID2NameMapping()
-    print(mappings)
+    #print(mappings)
     sensors = findSensorByType("ZLLTemperature")
     if sensors is not None:
         for sensor in sensors:
             tempdict={}
-            tempdict["id"]=sensor[1]["uniqueid"]
-            tempdict["name"]=mappings[tempdict["id"][:-5]]
+            temp_id=sensor[1]["uniqueid"]
+            tempdict["name"]=mappings[temp_id[:-5]]
             tempdict["temperature"]=sensor[1]["state"]["temperature"]/100
             temps.append(tempdict)
     else:
@@ -50,7 +50,6 @@ def getID2NameMapping():
     mappings={}
     sensors = findSensorByType("ZLLPresence")
     for sensor in sensors:
-        print(sensor[1]["uniqueid"][:-5])
         mappings[sensor[1]["uniqueid"][:-5]] = sensor[1]["name"]
     return mappings
 
